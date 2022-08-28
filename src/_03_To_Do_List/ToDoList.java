@@ -1,5 +1,19 @@
 package _03_To_Do_List;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
 public class ToDoList {
 	/*
 	 * Create a program with five buttons, add task, view tasks, remove task, save list, and load list. 
@@ -21,4 +35,69 @@ public class ToDoList {
 	 * 
 	 * When the program starts, it should automatically load the last saved file into the list. 
 	 */
+	JButton addTask = new JButton();
+	JButton viewTask = new JButton();
+	JButton removeTask = new JButton();
+	JButton saveList = new JButton();
+	JButton loadList = new JButton();
+	JFrame frame = new JFrame();
+	JLabel label = new JLabel();
+	JPanel panel = new JPanel();
+	
+	public void run() {
+		ArrayList<String> tasks = new ArrayList<String>();
+		addTask.addActionListener(e -> {
+			String task = JOptionPane.showInputDialog("Input a task: ");
+			tasks.add(task);
+		});
+		viewTask.addActionListener(e -> {
+			for(String task : tasks) {
+				System.out.println(task);
+			}
+		});
+		removeTask.addActionListener(e -> {
+			String input = JOptionPane.showInputDialog("What index task do you want to remove?");
+			int index = Integer.parseInt(input);
+			tasks.remove(index);
+		});
+		saveList.addActionListener(e -> {
+			try {
+				FileWriter fw = new FileWriter("src/_03_To_Do_List/todolist.txt");
+				for(String task: tasks) {
+					fw.write(task);
+					fw.write("\n");
+				}
+			}
+			catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
+		
+		loadList.addActionListener(e -> {
+			String location = JOptionPane.showInputDialog("Input the location of the file you want to retrieve: ");
+			try {
+				FileReader fr = new FileReader(location);
+				int c = fr.read();
+				while(c != -1) {
+					System.out.println((char) c);
+				}
+			}
+			catch(FileNotFoundException e1) {
+				e1.printStackTrace();
+			}
+			catch(IOException e2) {
+				e2.printStackTrace();
+			}
+		});
+		
+		frame.add(panel);
+		panel.add(addTask);
+		panel.add(viewTask);
+		panel.add(removeTask);
+		panel.add(saveList);
+		panel.add(loadList);
+		frame.setVisible(true);
+	}
+
 }
