@@ -46,6 +46,35 @@ public class ToDoList {
 	
 	public void run() {
 		ArrayList<String> tasks = new ArrayList<String>();
+		String location = "src/_03_To_Do_List/todolist.txt";
+		try {
+			FileReader fr = new FileReader(location);
+			int c = fr.read();
+			ArrayList<Character> arr = new ArrayList<Character>();
+			while(c != -1) {
+				arr.add((char) c);
+				c = fr.read();
+			}
+			fr.close();
+			String result = "";
+			for(char let : arr) {
+				if(let == ' ' ) {
+					tasks.add(result);
+					result = "";
+				}
+				else {
+					result += let;
+				}
+			}
+			System.out.println("Last saved tasks: " + result);
+		}
+		catch(FileNotFoundException e1) {
+			e1.printStackTrace();
+		}
+		catch(IOException e2) {
+			e2.printStackTrace();
+		}
+	
 		addTask.addActionListener(e -> {
 			String task = JOptionPane.showInputDialog("Input a task: ");
 			tasks.add(task);
@@ -67,6 +96,7 @@ public class ToDoList {
 					fw.write(task);
 					fw.write("\n");
 				}
+				fw.close();
 			}
 			catch (IOException e1) {
 				// TODO Auto-generated catch block
@@ -79,9 +109,17 @@ public class ToDoList {
 			try {
 				FileReader fr = new FileReader(location);
 				int c = fr.read();
+				ArrayList<Character> arr = new ArrayList<Character>();
 				while(c != -1) {
-					System.out.println((char) c);
+					arr.add((char) c);
+					c = fr.read();
 				}
+				fr.close();
+				String result = "";
+				for(char let : arr) {
+					result += let;
+				}
+				System.out.println(result);
 			}
 			catch(FileNotFoundException e1) {
 				e1.printStackTrace();
@@ -92,6 +130,11 @@ public class ToDoList {
 		});
 		
 		frame.add(panel);
+		addTask.setText("Add a task");
+		viewTask.setText("View tasks");
+		removeTask.setText("Remove Tasks");
+		saveList.setText("Save tasks");
+		loadList.setText("Load tasks");
 		panel.add(addTask);
 		panel.add(viewTask);
 		panel.add(removeTask);
