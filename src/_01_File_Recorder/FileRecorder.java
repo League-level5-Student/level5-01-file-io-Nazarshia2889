@@ -22,4 +22,4 @@ public class FileRecorder {
 			e.printStackTrace();
 		}
 	}
-}
+}//Copyright © 2022 Arshia Nayebnazar

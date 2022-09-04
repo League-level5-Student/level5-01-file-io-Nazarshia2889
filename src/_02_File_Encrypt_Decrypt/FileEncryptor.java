@@ -59,3 +59,4 @@ public class FileEncryptor {
 		}
 	}
 }
+//Copyright © 2022 Arshia Nayebnazar

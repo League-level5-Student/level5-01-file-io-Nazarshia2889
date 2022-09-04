@@ -70,3 +70,4 @@ public class FileDecryptor {
 		JOptionPane.showMessageDialog(null, result);
 	}
 }
+//Copyright © 2022 Arshia Nayebnazar
